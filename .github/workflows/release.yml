@@ -37,8 +37,7 @@ jobs:
 
       - name: Create new tag
         run: |
-          git tag -a -m "Tagging for release ${{ env.VERSION }}" "${{ env.VERSION }}"
+          git tag $VERSION -m "Tagging for release ${{ env.VERSION }}"
           git push origin ${{ env.VERSION }}
-          git push --tags
 
 
