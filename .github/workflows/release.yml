@@ -1,7 +1,10 @@
 name: Release
 
-on:
+on:      
   workflow_call:
+    secrets:
+      authToken:
+        required: true
 
 jobs:
   release:
@@ -10,7 +13,7 @@ jobs:
       - name: Check out
         uses: actions/checkout@v3
         with:
-          token: ${{ inputs.authToken }}
+          token: ${{ secrets.authToken }}
 
       - run: git config user.name 'Release BOT'
       - run: git config user.email 'noreply.release@github.com'
