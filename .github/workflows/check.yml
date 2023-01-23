@@ -1,4 +1,4 @@
-name: Check
+name: ''
 
 on:
   workflow_call:
