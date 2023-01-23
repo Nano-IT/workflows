@@ -37,7 +37,7 @@ jobs:
         run: |
           git add .
           git commit -m "Update files for new version '${{ env.VERSION }}' [skip ci]"
-          git push origin
+          git push origin master
 
       - name: Create new tag
         run: |
