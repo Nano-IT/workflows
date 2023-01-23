@@ -23,9 +23,6 @@ jobs:
           semversioner next-version
           semversioner release
           semversioner changelog > CHANGELOG.md
-
-      - name: Set version
-        run: |
           export VERSION=$(semversioner current-version)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
@@ -37,7 +34,6 @@ jobs:
 
       - name: Create new tag
         run: |
-          git tag $VERSION -m "Tagging for release ${{ env.VERSION }}"
-          git push origin ${{ env.VERSION }}
-
+          git tag $VERSION -m "Tagging for release $VERSION"
+          git push origin VERSION
 
