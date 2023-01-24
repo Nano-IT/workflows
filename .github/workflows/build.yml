@@ -23,10 +23,6 @@ on:
         required: false
         type: string
         default: $GITHUB_ACTOR
-      password:
-        required: false
-        type: string
-        default: "${{ secrets.BOT_ACCESS_TOKEN }}"
 
 jobs:
   build:
@@ -68,7 +64,7 @@ jobs:
         with:
           registry: ${{ inputs.registry }}
           username: ${{ inputs.username }}
-          password: ${{ inputs.password }}"
+          password: ${{ secrets.BOT_ACCESS_TOKEN }}"
 #
       - name: Build image and push to GitHub Packages
         uses: docker/build-push-action@v2
