@@ -22,7 +22,7 @@ on:
       username:
         required: false
         type: string
-        default: $GITHUB_ACTOR
+        default: 'tudorteisanu'
 
 jobs:
   build:
