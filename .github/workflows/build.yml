@@ -25,7 +25,7 @@ jobs:
       - name: Get version
         run: |
           if [ ${{ inputs.deployment }} = "development" ]; then
-            echo "::set-env name=TAG::$(echo ${GITHUB_REF#refs/heads/})"
+            TAG=$GITHUB_REF
           else
             TAG=$(semversioner current-version)
           fi
