@@ -24,7 +24,7 @@ jobs:
 
       - name: Get version
         run: |
-          if [ "$deployment" = "development" ]; then
+          if [ ${{ inputs.deployment }} = "development" ]; then
             TAG="${{ github.head_ref }}"
           else
             TAG=$(semversioner current-version)
