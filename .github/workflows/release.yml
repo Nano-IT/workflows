@@ -2,6 +2,9 @@ name: ""
 
 on:      
   workflow_call:
+    secrets:
+      BOT_ACCESS_TOKEN:
+        required: true
 
 jobs:
   release:
