@@ -68,7 +68,7 @@ jobs:
         with:
           registry: ${{ inputs.registry }}
           username: $GITHUB_ACTOR
-          password: ${{ secrets.BOT_ACCESS_TOKEN }}"
+          password: ${{ secrets.BOT_ACCESS_TOKEN }}
 #
       - name: Build image and push to GitHub Packages
         uses: docker/build-push-action@v2
