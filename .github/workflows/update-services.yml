@@ -10,16 +10,12 @@ on:
     secrets:
       user:
         required: true
-        type: string
       host:
         required: true
-        type: string
       dist:
         required: true
-        type: string
       key:
         required: true
-        type: string
 
 jobs:
   update-services:
