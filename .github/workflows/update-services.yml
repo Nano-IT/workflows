@@ -1,0 +1,51 @@
+name: Update services
+
+on:
+  workflow_call:
+    inputs:
+      deployment:
+        required: false
+        type: string
+        default: "development"
+
+jobs:
+  update-services:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+
+      - name: Install Semversioner
+        run: pip install semversioner
+
+      - name: Get version
+        run: |
+          if [ ${{ inputs.deployment }} = "development" ]; then
+            TAG=$(echo $GITHUB_REF | cut -d "/" -f 3)
+          else
+            TAG=$(semversioner current-version)
+          fi
+          
+          if [ ${{ inputs.tags }} ]; then
+            DOCKER_TAG="${{ inputs.tags }}"
+          else
+            REPO=$(echo ${{ github.repository }})
+            DOCKER_TAG=$(echo "docker.pkg.github.com/$REPO/$TAG")
+          fi
+ 
+          echo "DOCKER_TAG="${DOCKER_TAG,,}"" >> $GITHUB_ENV
+##
+      - name: Add ssh key
+        run: |
+          set -eu
+          mkdir "$HOME/.ssh"
+          echo "${{ secrets.key }}" > "$HOME/.ssh/key"
+          chmod 600 "$HOME/.ssh/key"
+      - name: Update services
+        shell: bash
+        env:
+          USER: ${{ secrets.user }}
+          HOST: ${{ secrets.host }}
+          DIST: ${{ secrets.dist }}
+        run: |
+          ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no $USER@$HOST "cd $DIST && export IMAGE=$DOCKER_TAG && docker-compose pull && docker-compose up -d"
