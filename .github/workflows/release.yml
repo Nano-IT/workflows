@@ -35,5 +35,5 @@ jobs:
       - name: Create new tag
         run: |
           git tag $VERSION -m "Tagging for release $VERSION"
-          git push origin VERSION
+          git push origin $VERSION
 
