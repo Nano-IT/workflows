@@ -2,6 +2,14 @@ name: Deploy-dev
 
 on:
   workflow_call:
+    inputs:
+      tags:
+        required: true
+        type: string
+      file:
+        required: false
+        type: string
+        default: "Dockerfile"
 
 jobs:
   deploy-dev:
