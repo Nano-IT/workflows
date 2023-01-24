@@ -1,4 +1,4 @@
-name: Deploy-dev
+name: Create package
 
 on:
   workflow_call:
@@ -17,7 +17,7 @@ on:
         default: "."
 
 jobs:
-  deploy-dev:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Check out

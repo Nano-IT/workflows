@@ -1,4 +1,4 @@
-name: ""
+name: "Release"
 
 on:      
   workflow_call:
@@ -32,9 +32,7 @@ jobs:
           semversioner release
           semversioner changelog > CHANGELOG.md
           export VERSION=$(semversioner current-version)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo $VERSION > VERSION
-          
+          echo "VERSION=$VERSION" >> $GITHUB_ENV          
 
       - name: Commit changes
         run: |

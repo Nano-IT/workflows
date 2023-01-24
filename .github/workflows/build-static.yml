@@ -1,9 +1,9 @@
-name: Build dev
+name: Build static
 on:
   workflow_call:
 
 jobs:
-  build:
+  build-static:
     runs-on: ubuntu-latest
     steps:
       - name: Check out
