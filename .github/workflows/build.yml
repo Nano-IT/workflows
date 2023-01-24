@@ -3,7 +3,7 @@ name: Create package
 on:
   workflow_call:
     inputs:
-      deployment:
+      environment:
         required: false
         type: string
         default: "development"
@@ -30,6 +30,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     steps:
       - name: Check out
         uses: actions/checkout@v3
