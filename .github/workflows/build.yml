@@ -25,7 +25,6 @@ on:
         default: 'tudorteisanu'
     secrets:
       BOT_ACCESS_TOKEN:
-        type: string
         required: true
 
 jobs:
