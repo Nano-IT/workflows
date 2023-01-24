@@ -36,14 +36,7 @@ jobs:
             TAG=$(semversioner current-version)
           fi
           
-          if [ ${{ inputs.tags }} ]; then
-            DOCKER_TAG="${{ inputs.tags }}"
-          else
-            REPO=$(echo ${{ github.repository }})
-            DOCKER_TAG=$(echo "docker.pkg.github.com/$REPO/$TAG")
-          fi
- 
-          echo "DOCKER_TAG="${DOCKER_TAG,,}"" >> $GITHUB_ENV
+          echo "VERSION="$TAG" >> $GITHUB_ENV
 ##
       - name: Add ssh key
         run: |
@@ -58,4 +51,4 @@ jobs:
           HOST: ${{ secrets.host }}
           DIST: ${{ secrets.dist }}
         run: |
-          ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no $USER@$HOST "cd $DIST && export IMAGE=$DOCKER_TAG && docker-compose pull && docker-compose up -d"
+          ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no $USER@$HOST "cd $DIST && export VERSION=$VERSION && docker-compose pull && docker-compose up -d"
