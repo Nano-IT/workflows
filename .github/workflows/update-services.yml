@@ -36,7 +36,7 @@ jobs:
             TAG=$(semversioner current-version)
           fi
           
-          echo "VERSION="$TAG" >> $GITHUB_ENV
+          echo "VERSION=$TAG" >> $GITHUB_ENV
 ##
       - name: Add ssh key
         run: |
