@@ -25,7 +25,16 @@ jobs:
 
       - name: Release
         run: |
-          npm version patch -m "[skip ci]"
+          COMMIT_MESSAGE = ${{ github.event.head_commit.message }}
+          TYPE = 'patch'
+          
+          if [[ $COMMIT_MESSAGE =~ "[major]" ]]; then
+            TYPE="major"
+          elif [[ $COMMIT_MESSAGE =~ "[minor]" ]]; then
+            TYPE="minor"
+          fi
+  
+          npm version $TYPE -m "[skip ci]"
           git push origin master
 
       - name: Get version
