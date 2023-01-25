@@ -23,6 +23,10 @@ on:
         required: false
         type: string
         default: 'tudorteisanu'
+      manager:
+        required: false
+        type: string
+        default: 'npm'
     secrets:
       BOT_ACCESS_TOKEN:
         required: true
@@ -35,15 +39,17 @@ jobs:
       - name: Check out
         uses: actions/checkout@v3
 
-      - name: Install Semversioner
-        run: pip install semversioner
-
-      - name: Get version
+      - name: Parse tag
         run: |
           if [ ${{ inputs.deployment }} = "development" ]; then
             TAG=$(echo $GITHUB_REF | cut -d "/" -f 3)
           else
-            TAG=$(semversioner current-version)
+            if [ ${{ inputs.manager }} == "npm" ]; then
+              TAG=$(grep '"version"' package.json | cut -d '"' -f 4 | head -n 1)
+            elif [ ${{ inputs.manager }} == "semversioner" ]; then
+              pip install semversioner
+              TAG=$(semversioner current-version)
+            fi
           fi
           
           if [ ${{ inputs.tags }} ]; then

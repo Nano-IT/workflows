@@ -7,10 +7,10 @@ on:
         required: false
         type: string
         default: "development"
-      releaser:
+      manager:
         required: false
         type: string
-        default: "semversioner"
+        default: "npm"
     secrets:
       user:
         required: true
@@ -34,10 +34,10 @@ jobs:
           if [ ${{ inputs.deployment }} = "development" ]; then
             TAG=$(echo $GITHUB_REF | cut -d "/" -f 3)
           else
-            if [[ ${{ inputs.releaser }} == 'semversioner' ]] then   
+            if [[ ${{ inputs.manager }} == 'semversioner' ]]; then   
               pip install semversioner
               TAG=$(semversioner current-version)
-            else        
+            elif [[ ${{ inputs.manager }} == 'npm' ]]; then
               TAG=$(grep '"version"' package.json | cut -d '"' -f 4 | head -n 1)
             fi
           fi
