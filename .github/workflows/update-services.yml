@@ -7,6 +7,10 @@ on:
         required: false
         type: string
         default: "development"
+      releaser:
+        required: false
+        type: string
+        default: "semversioner"
     secrets:
       user:
         required: true
@@ -25,15 +29,17 @@ jobs:
       - name: Check out
         uses: actions/checkout@v3
 
-      - name: Install Semversioner
-        run: pip install semversioner
-
       - name: Get version
         run: |
           if [ ${{ inputs.deployment }} = "development" ]; then
             TAG=$(echo $GITHUB_REF | cut -d "/" -f 3)
           else
-            TAG=$(semversioner current-version)
+            if [[ ${{ inputs.releaser }} == 'semversioner' ]] then   
+              pip install semversioner
+              TAG=$(semversioner current-version)
+            else        
+              TAG=$(grep '"version"' package.json | cut -d '"' -f 4 | head -n 1)
+            fi
           fi
           
           echo "VERSION=$TAG" >> $GITHUB_ENV
