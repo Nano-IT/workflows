@@ -41,7 +41,7 @@ jobs:
 
       - name: Parse tag
         run: |
-          if [ ${{ inputs.deployment }} = "development" ]; then
+          if [ ${{ inputs.environment }} = "development" ]; then
             TAG=$(echo $GITHUB_REF | cut -d "/" -f 3)
           else
             if [ ${{ inputs.manager }} == "npm" ]; then
