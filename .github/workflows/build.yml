@@ -55,13 +55,8 @@ jobs:
           if [ ${{ inputs.tags }} ]; then
             DOCKER_TAG="${{ inputs.tags }}"
           else
-            if [ ${{ inputs.environment }} = "development" ]; then
-               IMAGE=TAG
-            else
-               IMAGE="release:$TAG"
-            fi
             REPO=$(echo ${{ github.repository }})
-            DOCKER_TAG=$(echo "docker.pkg.github.com/$REPO/$IMAGE")
+            DOCKER_TAG=$(echo "docker.pkg.github.com/$REPO/$REPO:$TAG")
           fi
  
           echo "DOCKER_TAG="${DOCKER_TAG,,}"" >> $GITHUB_ENV
